@@ -3,12 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <style>
+        .transRed{
+            background: yellow;
+            height: 20px;
+        }
+    </style>
     <script src="vue.js"></script>
 </head>
 <body>
 <div id="dateapp">
     <!--过滤器,|后面接的是过滤器的名字-->
-    {{date | formatDate}}
+    <!--{{date | formatDate}}-->
+    <!--过滤器参数-->
+    {{date | formatDate(66,99)}}
+    <hr>
+    指令和事件 <br>
+    v-text指令:
+    {{apple}}<br>
+    <span v-text="apple"></span>
+    <hr>
+    v-html指令:
+
+    <span v-html="banana"></span>
+    <hr>
+    v-bind指令:绑定活的属性<br>
+    <div v-bind:class="className"></div>
+    <hr>
+    v-on指令:用来绑定事件监听器
+    <button v-on:click="count">{{countnum}}</button>
+    <button @="count">{{countnum}}</button>
+
+
 </div>
 
 <script>
@@ -20,7 +46,11 @@
     var app =new Vue({
         el:"#dateapp",
         data:{
-            date:new Date()
+            date:new Date(),
+            apple:'苹果',
+            banana:'<span style="color: yellow;">香蕉</span>',
+            className:'transRed',
+            countnum:0
         },
         //定义过滤器
         filters:{
@@ -37,6 +67,11 @@
               //将整理好的数据返回
               return year +'--'+month+'--'+day+'       '+hours+'--'+min+'--'+sec
           }
+        },
+        methods:{
+            count:function () {
+                this.countnum = this.countnum+1
+            }
         },
         mounted:function () {
             var _this=this;//this代表着vue实例自己
